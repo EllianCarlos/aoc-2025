@@ -1,0 +1,15 @@
+[package]
+name = "advent-of-code-2025"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+anyhow = "1.0"
+itertools = "0.13"
+regex = "1.10"
+nom = "7.1"
+aoc-runner = "0.3.0"
+aoc-runner-derive = "0.3.0"
+miette = "7.2.0"
+ratatui = "0.26.3"
+thiserror = "1.0.61"

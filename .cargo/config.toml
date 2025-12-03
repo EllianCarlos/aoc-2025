@@ -1,0 +1,7 @@
+[run]
+# Hide the default "[INFO] Running..." message
+quiet = true
+
+[env]
+# Point to the input files for the solutions
+AOC_INPUT = { value = "./input", relative = true }
