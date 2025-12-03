@@ -31,7 +31,7 @@ The `aoc-runner` expects the input for each day to be in a specific file structu
 You can use the `aoc-cli` to download the input for a specific day. For example, to download the input for Day 1, run:
 
 ```bash
-aoc download -d 1
+aoc download --input-only --day 1 --input-file input/2025/day1.txt --overwrite
 ```
 
 This command will create the `input/2025/day1.txt` file with the correct puzzle input.
@@ -40,42 +40,42 @@ This command will create the `input/2025/day1.txt` file with the correct puzzle 
 
 To create a new solution for a given day, you can create a new file in the `src/days/` directory. For example, for Day 3, you would create `src/days/day03.rs`.
 
-Here is a template you can use for the new file:
+Here is a template you can use for the new file. Remember to replace `{{day}}` with the corresponding day number.
 
 ```rust
 use aoc_runner_derive::{aoc, aoc_generator};
-use anyhow::Result;
 
-#[aoc_generator(day3)]
-pub fn input_generator(input: &str) -> Result<Vec<u32>> {
-    Ok(input.lines().map(|l| l.parse().unwrap()).collect())
+#[aoc_generator(day{{day}})]
+pub fn input_generator(input: &str) -> Vec<&str> {
+    input.lines().collect()
 }
 
-#[aoc(day3, part1)]
-pub fn part1(input: &[u32]) -> u32 {
+#[aoc(day{{day}}, part1)]
+pub fn part1(input: &[&str]) -> u32 {
     0
 }
 
-#[aoc(day3, part2)]
-pub fn part2(input: &[u32]) -> u32 {
+#[aoc(day{{day}}, part2)]
+pub fn part2(input: &[&str]) -> u32 {
     0
 }
 
 #[cfg(test)]
 mod tests {
     use super::*;
+    use std::fs;
 
     #[test]
     fn test_part1() {
-        let input = "";
-        let result = part1(&input_generator(input).unwrap());
+        let input = fs::read_to_string("input/2025/day{{day}}.txt").unwrap();
+        let result = part1(&input_generator(&input));
         assert_eq!(result, 0);
     }
 
     #[test]
     fn test_part2() {
-        let input = "";
-        let result = part2(&input_generator(input).unwrap());
+        let input = fs::read_to_string("input/2025/day{{day}}.txt").unwrap();
+        let result = part2(&input_generator(&input));
         assert_eq!(result, 0);
     }
 }

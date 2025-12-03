@@ -19,3 +19,7 @@ devenv.yaml
 
 # OS specific
 .DS_Store
+
+# AOC
+puzzle.md
+input
