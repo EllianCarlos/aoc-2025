@@ -8,7 +8,6 @@ pub fn input_generator(input: &str) -> Vec<String> {
 
 #[aoc(day1, part1)]
 pub fn part1(input: &[String]) -> u32 {
-    let line_iter = input.iter();
     let dials = input.iter().fold(Vec::from([50i32]), |acc, line| {
         let type_operation = line.chars().next().unwrap();
         let rest_of_the_string = &line[type_operation.len_utf8()..];
