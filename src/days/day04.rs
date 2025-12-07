@@ -1,7 +1,5 @@
 use aoc_runner_derive::{aoc, aoc_generator};
 use anyhow::Result;
-use std::cmp::max;
-use std::cmp::min;
 
 #[aoc_generator(day4)]
 pub fn input_generator(input: &str) -> Vec<String> {

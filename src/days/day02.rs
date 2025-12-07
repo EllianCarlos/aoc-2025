@@ -3,7 +3,7 @@ use anyhow::Result;
 
 #[aoc_generator(day2)]
 pub fn input_generator(input: &str) -> Vec<String> {
-    input.split(',').map(|s| s.to_string()) .collect()
+    input.split(',').map(|s| s.to_string()).collect()
 }
 
 fn is_repeating_twice(s: &str) -> bool {
