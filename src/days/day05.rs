@@ -33,6 +33,9 @@ pub fn part1(input: &Ingredients) -> u64 {
     // Maybe we should use a BST an Interval Tree os some sort of sorted array with ranges
     // to improve the complexity time of this 
     // but for AOC day5, this is good.
+    //
+    // Even for much more bigger inputs,
+    // just doing a par_iter would be better here.
     input.queries.iter().fold(0u64, |total_valid, n| { 
         for (s, e) in input.rules.iter() {
             if s <= n && n <= e {

@@ -14,15 +14,15 @@ fn is_repeating_twice(s: &str) -> bool {
     a == b
 }
 
-fn is_repeating(s: &str) -> bool {
-    if s.len() < 2 { return false; }
-
-    let doubled = s.repeat(2);
-
-    let trimmed = &doubled[1..doubled.len()-1];
-
-    trimmed.contains(s)
-}
+// fn is_repeating(s: &str) -> bool {
+//     if s.len() < 2 { return false; }
+//
+//     let doubled = s.repeat(2);
+//
+//     let trimmed = &doubled[1..doubled.len()-1];
+//
+//     trimmed.contains(s)
+// }
 
 #[aoc(day2, part1)]
 pub fn part1(input: &[String]) -> u64 {
