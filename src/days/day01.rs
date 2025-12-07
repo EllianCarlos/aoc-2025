@@ -8,31 +8,31 @@ pub fn input_generator(input: &str) -> Vec<String> {
 
 #[aoc(day1, part1)]
 pub fn part1(input: &[String]) -> u32 {
-    let dials = input.iter().fold(Vec::from([50i32]), |acc, line| {
+    let initial_pos = 50i32;
+
+    let positions = input.iter().scan(initial_pos, |current_pos, line| {
         let type_operation = line.chars().next().unwrap();
         let rest_of_the_string = &line[type_operation.len_utf8()..];
         let number: i32 = rest_of_the_string.parse().unwrap();
+
         let next_val = match type_operation {
-            'L' => acc.last().unwrap() - number,
-            'R' => acc.last().unwrap() + number,
+            'L' => *current_pos - number,
+            'R' => *current_pos + number,
             _ => todo!(),
         };
-        let abs_next_val = if next_val < 0 {
-            next_val + 100
-        } else {
-            next_val
-        };
 
-        [acc, [abs_next_val % 100].to_vec()].concat()
-    }).iter().fold(0, |acc, num| {
-        if *num == 0 {
-            acc + 1
-        } else {
-            acc
-        }
+        let next_pos = next_val.rem_euclid(100);
+
+        *current_pos = next_pos;
+        Some(next_pos)
     });
-    println!("{dials}");
-    dials
+
+    let zero_count = std::iter::once(initial_pos)
+        .chain(positions)
+        .filter(|&pos| pos == 0)
+        .count() as u32;
+
+    zero_count
 }
 
 #[aoc(day1, part2)]

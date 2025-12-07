@@ -10,33 +10,27 @@ pub fn input_generator(input: &str) -> Vec<String> {
 
 #[aoc(day4, part1)]
 pub fn part1(input: &[String]) -> u64 {
-    let input_as_char_matrix: Vec<Vec<char>> = input.iter().map(|s| s.chars().collect()).collect();
+    let grid: Vec<Vec<char>> = input.iter().map(|s| s.chars().collect()).collect();
+    let rows = grid.len();
+    let cols = grid[0].len();
 
-    let mut acessible_rolls = 0u64;
+    (0..rows).flat_map(|r| (0..cols).map(move |c| (r,c)))
+        .filter(|&(r,c)| grid[r][c] == '@')
+        .filter(|&(r,c)| {
+            let neighbor_count = (-1..=1).flat_map(|dr| (-1..=1).map(move |dc| (dr,dc)))
+                .filter(|&(dr,dc)| dr != 0 || dc != 0)
+                .filter(|&(dr,dc)| {
+                    let nr = r as isize + dr;
+                    let nc = c as isize + dc;
+                    nr >= 0 && nr < rows as isize &&
+                    nc >= 0 && nc < cols as isize &&
+                    grid[nr as usize][nc as usize] == '@'
+                })
+                .count() as u64;
 
-    let n = input_as_char_matrix.len() as i64;
-
-    for i in 0i64..n {
-        for j in 0i64..n {
-            let mut roll_near = 0u64;
-
-            for ii in max(0, i-1)..=min(i+1, n-1) {
-                for jj in max(0, j-1)..=min(j+1, n-1) {
-                    let eval_roll = input_as_char_matrix[ii as usize][jj as usize];
-                    if eval_roll == '@' && (ii != i || jj != j) {
-                        roll_near += 1u64;
-                    } 
-                }
-            }
-
-
-            if roll_near < 4u64 && input_as_char_matrix[i as usize][j as usize] == '@' {
-                acessible_rolls += 1u64;
-            }
-        }
-    }
-
-    acessible_rolls
+            neighbor_count < 4
+        })
+        .count() as u64
 }
 
 #[aoc(day4, part2)]
