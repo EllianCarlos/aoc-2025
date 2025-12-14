@@ -18,7 +18,7 @@ pub fn part1(input: &[String]) -> u32 {
         let next_val = match type_operation {
             'L' => *current_pos - number,
             'R' => *current_pos + number,
-            _ => todo!(),
+            _ => unreachable!(),
         };
 
         let next_pos = next_val.rem_euclid(100);
@@ -35,9 +35,41 @@ pub fn part1(input: &[String]) -> u32 {
     zero_count
 }
 
+fn count_zero_hits(start: i64, delta: i64) -> i64 {
+    let steps = delta.abs();
+    let dir = delta.signum();
+
+    let first = ((-start * dir).rem_euclid(100)) as i64;
+
+    if first == 0 {
+        steps / 100
+    } else if first > steps {
+        0
+    } else {
+        1 + (steps - first) / 100
+    }
+}
+
 #[aoc(day1, part2)]
-pub fn part2(_input: &[String]) -> u32 {
-    0
+pub fn part2(input: &[String]) -> i64 {
+    let mut pos = 50i64;
+    let mut ans = 0i64;
+
+    for line in input {
+        let op = line.chars().next().unwrap();
+        let n:i64 = line[1..].parse().unwrap();
+
+        let delta = match op {
+            'L' => -n,
+            'R' => n,
+            _ => unreachable!(),
+        };
+
+        ans += count_zero_hits(pos, delta);
+        pos = (pos + delta).rem_euclid(100);
+    }
+
+    ans
 }
 
 #[cfg(test)]
@@ -47,16 +79,16 @@ mod tests {
 
     #[test]
     fn test_part1() {
-        let input = fs::read_to_string("input/2025/manual.txt").unwrap();
-        // let input = fs::read_to_string("input/2025/day1.txt").unwrap();
+        // let input = fs::read_to_string("input/2025/manual.txt").unwrap();
+        let input = fs::read_to_string("input/2025/day1.txt").unwrap();
         let result = part1(&input_generator(&input));
         assert_eq!(result, 0);
     }
 
     #[test]
     fn test_part2() {
-        // let input = fs::read_to_string("input/2025/day1.txt").unwrap();
-        let input = fs::read_to_string("input/2025/manual.txt").unwrap();
+        let input = fs::read_to_string("input/2025/day1.txt").unwrap();
+        // let input = fs::read_to_string("input/2025/manual.txt").unwrap();
         let result = part2(&input_generator(&input));
         assert_eq!(result, 0);
     }
