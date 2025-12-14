@@ -1,6 +1,5 @@
 use aoc_runner_derive::{aoc, aoc_generator};
 use std::collections::HashMap;
-use std::collections::BTreeMap;
 use std::f64;
 
 #[derive(Clone, Copy, Debug)]
@@ -105,7 +104,6 @@ pub fn input_generator(input: &str) -> Streets {
 pub fn part1(input: &Streets) -> u64 {
     let lamps = input.lamps();
 
-    // 1. Build all edges
     let mut edges: Vec<Edge> = Vec::new();
     for i in 0..lamps.len() {
         for j in (i + 1)..lamps.len() {
@@ -117,10 +115,8 @@ pub fn part1(input: &Streets) -> u64 {
         }
     }
 
-    // 2. Sort globally by distance
     edges.sort_by(|e1, e2| e1.dist.total_cmp(&e2.dist));
 
-    // 3. Kruskal-style processing, stop after 1000 edges
     let mut streets = input.clone();
     let mut processed = 0;
 
@@ -133,7 +129,6 @@ pub fn part1(input: &Streets) -> u64 {
         processed += 1;
     }
 
-    // 4. Count component sizes
     let mut provinces_by_root: HashMap<usize, u64> = HashMap::new();
 
     for i in 0..streets.lamps.len() {
